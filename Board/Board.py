@@ -33,15 +33,11 @@ class Board:
     def prepMove(self):
         if (self.clicked_index != 6 and self.clicked_index != 5 and self.clicked_index != 4 and self.clicked_index != 3 and self.clicked_index != 2 and self.clicked_index != 1 and self.clicked_index != 0) and self.player == 1:
             self.wrong_turn = 1
-            print("#######################################")
-            print("This is player 2 piles! pick from yours")
-            print("#######################################")
+
             return
         elif (self.clicked_index != 13 and self.clicked_index != 12 and self.clicked_index != 11 and self.clicked_index != 10 and self.clicked_index != 9 and self.clicked_index != 8 and self.clicked_index != 7) and self.player == 2:
             self.wrong_turn = 2
-            print("#######################################")
-            print("This is player 1 piles! pick from yours")
-            print("#######################################")
+
             return
         else:
             self.wrong_turn = 0

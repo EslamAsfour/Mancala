@@ -20,7 +20,6 @@ class Ui_MainWindow(object):
                 MainWindow.setObjectName("MainWindow")
                 #! Board Obj
                 self.BoardObj = Board()
-                
                 MainWindow.resize(1251, 797)
                 self.centralwidget = QtWidgets.QWidget(MainWindow)
                 self.centralwidget.setObjectName("centralwidget")
@@ -471,6 +470,8 @@ class Ui_MainWindow(object):
                 
                 self.BoardObj.clicked_index = int(sending_button.objectName()[2:])
                 self.BoardObj.prepMove()
+                if self.BoardObj.wrong_turn == 1 or self.BoardObj.wrong_turn == 2:
+                        return
                 #self.Player2Turn_2.setText('%s Clicked!' % str(sending_button.objectName()))
                 #! Add your Function Board Function
                 self.Update_Board()
@@ -479,6 +480,12 @@ class Ui_MainWindow(object):
                 self.Reset_Timer()
                 self.Toggle_Btns()
                 self.LastPlayer = self.BoardObj.player
+                if self.BoardObj.winning_player == 1:
+                        print("Player 1 Win")
+                elif self.BoardObj.winning_player == 2:
+                        print("Player 2 Win")
+                elif self.BoardObj.winning_player == 3:
+                        print("Draw")
                 
         #! 
         def Update_Board(self):
