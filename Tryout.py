@@ -50,7 +50,7 @@ def PrepMove(ls, index, player , flag):
  
 
 
-ls = [4,4,4,4,4,4,0,4,4,4,4,4,4,0]
+ls = [4,4,4,4,4,17,0,4,4,4,4,4,4,0]
 index = 0
 player =1
 PrintList(ls)

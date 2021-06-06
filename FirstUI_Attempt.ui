@@ -613,6 +613,58 @@ background-color: transparent
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="Plus1_P2Label">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>220</y>
+        <width>81</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color :  rgb(255, 252, 168);
+</string>
+      </property>
+      <property name="text">
+       <string>+1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Plus1_P1Label">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>540</y>
+        <width>81</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color :  rgb(255, 252, 168);
+</string>
+      </property>
+      <property name="text">
+       <string>+1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <zorder>BackgroundImg</zorder>
      <zorder>BoardImgLabel</zorder>
      <zorder>BT0</zorder>
@@ -633,6 +685,8 @@ background-color: transparent
      <zorder>BT8</zorder>
      <zorder>Player2Turn_2</zorder>
      <zorder>SecCounterLabel</zorder>
+     <zorder>Plus1_P2Label</zorder>
+     <zorder>Plus1_P1Label</zorder>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QLabel" name="label">
