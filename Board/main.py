@@ -1,23 +1,31 @@
 from Board import Board
 
+board = Board()
 
-
-board= Board()
 
 board.toggleGameStatus(1)
+board.printPiles()
 
-while(board.playing==True):
+while board.playing:
 
-    if board.winning_player == 0:
-        board.moveFromPile()
-    elif board.winning_player == 1:
-        print("Player 1 is the winner !")
-        break
-    elif board.winning_player == 2:
-        print("Player 2 is the winner !")
-        break
-    else :
-        print ("Draw ~0~")
-        break
+    if board.winning_player != 0:
+        if board.winning_player == 3:
+            print("The game ended in draw!")
+            break
+        else:
+            print("Congratulation Player ", board.winning_player, ", YOU WON!")
+            break
+
+    print("Its Player ", board.player, " turn !")
+    board.clicked_index = int(input("Please enter the starting index\n"))
+
+    board.prepMove()
+    board.printPiles()
+
+
+
+
+
+
 
 
