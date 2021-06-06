@@ -12,7 +12,7 @@ class Board:
         self.piles = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 
         # test cases
-        # self.piles = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0]
+        #self.piles = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0]
         # self.piles = [4, 4, 4, 4, 4, 29, 0, 4, 32, 4, 4, 4, 4, 0]
 
     # Start or end and choose player 1 or 2 to start
