@@ -5,6 +5,7 @@ class Board:
         self.player = 1
         self.wrong_turn = 0
         self.clicked_index = 0
+        self.saveLoad = ''
         self.winning_player = 0
         # Player1 & 2 stores
         self.player1_store = 6
@@ -123,10 +124,28 @@ class Board:
 
     # save current game status.
     def saveGame(self):
-        # with open('gamefile.txt', 'w') as filehandle:
-        #     filehandle.writelines("%s\n" % pile for pile in self.piles)
-        pass
+        with open('gamefile.txt', 'w') as filehandle:
+            filehandle.writelines("%s\n" % pile for pile in self.piles)
+            filehandle.write(str(self.player))
+            filehandle.close()
+        self.saveLoad = ""
+
+
 
     # load a saved game.
     def loadGame(self):
-        pass
+        tempPilesList = []
+        with open('gamefile.txt', 'r') as filehandle:
+            filecontents = filehandle.readlines()
+            for line in range(len(filecontents)):
+                # remove linebreak which is the last character of the string
+                if line == len(filecontents)-1:
+                    self.player = int(filecontents[line])
+                else:
+                    pile = int(filecontents[line])
+                    tempPilesList.append(pile)
+
+                # add item to the list
+            filehandle.close()
+        self.piles = tempPilesList
+        self.saveLoad = ""
