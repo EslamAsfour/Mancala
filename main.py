@@ -427,8 +427,11 @@ class Ui_MainWindow(object):
                         self.SecCounterLabel.setText(text)
         #! Function Called when a pile is clicked              
         def Pile_Pressed(self):
-               
                 sending_button = self.MainWindow.sender()
+                print(sending_button.text())
+                if sending_button.text() == '0':
+                        print("Can't Play 0")
+                        pass
                 #self.Player2Turn_2.setText('%s Clicked!' % str(sending_button.objectName()))
                 #! Add your Function Board Function
                 self.Update_Board()
@@ -441,7 +444,14 @@ class Ui_MainWindow(object):
         def Update_Board(self):
                 count = 0
                 for newValue,btn in zip(self.Values, self.Btn_List):
+                        if newValue == 0:
+                                btn.setEnabled(False)
+                        else:
+                                btn.setEnabled(True)
                         btn.setText(str(newValue))
+                        
+                self.BT6.setEnabled(False)
+                self.BT13.setEnabled(False)
                 
         def Start_Game(self):
                 self.count = 20 * 10
