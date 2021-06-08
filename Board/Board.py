@@ -3,7 +3,7 @@ class Board:
     def __init__(self):
         self.playing = False
         self.player = 1
-        self.stealing = False
+        self.stealing = True
         self.wrong_turn = 0
         self.clicked_index = 0
         self.saveLoad = ''
@@ -162,7 +162,8 @@ class Board:
     def saveGame(self):
         with open('gamefile.txt', 'w') as filehandle:
             filehandle.writelines("%s\n" % pile for pile in self.piles)
-            filehandle.write(str(self.player))
+            filehandle.write(str(self.player)+"\n")
+            filehandle.write(str(self.stealing))
             filehandle.close()
         self.saveLoad = ""
 
@@ -175,8 +176,13 @@ class Board:
             filecontents = filehandle.readlines()
             for line in range(len(filecontents)):
                 # remove linebreak which is the last character of the string
-                if line == len(filecontents)-1:
+                if line == len(filecontents) - 2:
                     self.player = int(filecontents[line])
+                elif line == len(filecontents) - 1:
+                    if filecontents[line] == "True":
+                        self.stealing = True
+                    else:
+                        self.stealing = False
                 else:
                     pile = int(filecontents[line])
                     tempPilesList.append(pile)
