@@ -101,6 +101,13 @@ class Board:
             else:
                 self.togglePlayer()
 
+        if (self.piles[0] == 0 and self.piles[1] == 0 and self.piles[2] == 0 and self.piles[3] == 0 and self.piles[
+                4] == 0 and self.piles[5] == 0) and self.player == 1:
+            self.player = 2
+        elif (self.piles[7] == 0 and self.piles[8] == 0 and self.piles[9] == 0 and self.piles[10] == 0 and self.piles[
+                11] == 0 and self.piles[12] == 0) and self.player == 2:
+            self.player = 1
+
 
         self.piles[self.clicked_index] += 1
         return self.playMove(depth - 1)
