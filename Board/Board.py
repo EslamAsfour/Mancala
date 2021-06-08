@@ -12,11 +12,11 @@ class Board:
         self.player1_store = 6
         self.player2_store = 13
         # zero-stone piles are the store of each player.
-        self.piles = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+        #self.piles = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
         self.pilesDict = {0: 12, 1: 11, 2: 10, 3: 9, 4: 8, 5: 7, 12: 0, 11: 1, 10: 2, 9: 3, 8: 4, 7: 5}
 
         # test cases
-        #self.piles = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0]
+        self.piles = [0, 5, 0, 5, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0]
         # self.piles = [4, 4, 4, 4, 4, 29, 0, 4, 32, 4, 4, 4, 4, 0]
 
     # Start or end and choose player 1 or 2 to start
@@ -122,10 +122,13 @@ class Board:
         if self.piles[self.player1_store] + self.piles[self.player2_store] == 48:
             if self.piles[self.player1_store] > self.piles[self.player2_store]:
                 self.winning_player = 1
+                print("Player 1 WIn")
             elif self.piles[self.player1_store] < self.piles[self.player2_store]:
                 self.winning_player = 2
+                print("Player 2 WIn")
             else:
                 self.winning_player = 3  # Draw
+                print("Draw")
         else:
             self.winning_player = 0
 
