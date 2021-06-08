@@ -127,14 +127,11 @@ class Board:
     def checkToEnd(self):
         if self.piles[self.player1_store] + self.piles[self.player2_store] == 48:
             if self.piles[self.player1_store] > self.piles[self.player2_store]:
-                self.winning_player = 1
-                print("Player 1 WIn")
+                self.winning_player = 1 
             elif self.piles[self.player1_store] < self.piles[self.player2_store]:
                 self.winning_player = 2
-                print("Player 2 WIn")
             else:
-                self.winning_player = 3  # Draw
-                print("Draw")
+                self.winning_player = 3  # Draw    
         else:
             self.winning_player = 0
 

@@ -500,7 +500,7 @@ class Ui_MainWindow(object):
         self.Player1Turn.setText(_translate("MainWindow", "Player 1 Turn"))
         self.Plus1_P2Label.setText(_translate("MainWindow", "+1"))
         self.Plus1_P1Label.setText(_translate("MainWindow", "+1"))
-        self.SaveBtn.setText(_translate("MainWindow", "Save"))
+        self.SaveBtn.setText(_translate("MainWindow", "Save,Exit"))
         self.MancalaLabel_2.setText(_translate("MainWindow", "Mancala Game "))
         self.SinglePlayerBtn.setText(_translate("MainWindow", "Single Player"))
         self.MultiPlayerBtn.setText(_translate("MainWindow", "Multi-Player"))
@@ -553,11 +553,16 @@ class Ui_MainWindow(object):
     def saveGame(self):  
         QSound.play("Click.wav")
         self.BoardObj.saveGame()
+        self.exitGame()
     def exitGame(self):  
-        sys.exit(app.exec_())
+        sys.exit()
     def loadGame(self):
         self.BoardObj.loadGame()
-        self.StartGame()
+        self.stackedWidget.setCurrentIndex(0) 
+        self.Toggle_Btns()   
+        self.LastPlayer = self.BoardObj.player
+        self.Update_Board()
+        QSound.play("Thba7.wav")
         
     def StartGame(self):
         if self.RadioStealing.isChecked():
@@ -566,10 +571,10 @@ class Ui_MainWindow(object):
         else : 
                 self.BoardObj.stealing = False
                 print("No Stealing Activated")
-        self.BoardObj.toggleGameStatus(1)
+        
         self.stackedWidget.setCurrentIndex(0) 
         self.Toggle_Btns()   
-        self.LastPlayer =1
+        self.LastPlayer = self.BoardObj.player
         self.Update_Board()
         QSound.play("Thba7.wav")
     def showTime(self):
@@ -577,7 +582,6 @@ class Ui_MainWindow(object):
         if self.start:
                 # incrementing the counter
                 self.count -= 1
-
         # timer is completed
         if self.count == 0:
                 # making flag false
@@ -633,15 +637,24 @@ class Ui_MainWindow(object):
    
     def CheckWinner(self):
             if self.BoardObj.winning_player != 0:
-                   msg = QtWidgets.QMessageBox()
-                   msg.setWindowTitle("We Have a Winner!!")
-                   msg.setText("Congrats Player"+str(self.BoardObj.winning_player)+" You are the Winner!!")  
-                   msg.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Cancel)
-                   msg.clickedButton.connect()
-                   x = msg.exec_() 
+                   if self.BoardObj.winning_player == 3:
+                        msg = QtWidgets.QMessageBox()
+                        msg.setWindowTitle("Draw!!")
+                        msg.setText("Better luck Next Game!")  
+                        msg.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Cancel)
+                        msg.buttonClicked.connect(self.MsgButton)
+                        x = msg.exec_()   
+                   else :    
+                        msg = QtWidgets.QMessageBox()
+                        msg.setWindowTitle("We Have a Winner!!")
+                        msg.setText("Congrats Player"+str(self.BoardObj.winning_player)+" You are the Winner!!")  
+                        msg.setStandardButtons(QtWidgets.QMessageBox.Retry | QtWidgets.QMessageBox.Cancel)
+                        msg.buttonClicked.connect(self.MsgButton)
+                        x = msg.exec_()  
     #! Function Called when the winner choose retry or cancle            
     def MsgButton(self,i):
-            if i.text == "Retry":
+            if i.text() == "Retry":
+                print("Retry")
                 self.BoardObj = Board()
                 self.StartGame()
             else : 
