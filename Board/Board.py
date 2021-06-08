@@ -86,6 +86,7 @@ class Board:
                     self.piles[self.player1_store] += totalPilesAdded
                     self.piles[self.pilesDict[self.clicked_index]] = 0
                     self.togglePlayer()
+                    self.toggleIfDone()
                     return
 
                 elif self.player == 2 and self.clicked_index >= 7 and self.clicked_index < 13 and self.piles[self.clicked_index] == 0:
@@ -94,23 +95,28 @@ class Board:
                     self.piles[self.player2_store] += totalPilesAdded
                     self.piles[self.pilesDict[self.clicked_index]] = 0
                     self.togglePlayer()
+                    self.toggleIfDone()
                     return
                 else:
                     self.togglePlayer()
 
+
             else:
                 self.togglePlayer()
 
+        self.toggleIfDone()
+
+
+        self.piles[self.clicked_index] += 1
+        return self.playMove(depth - 1)
+
+    def toggleIfDone(self):
         if (self.piles[0] == 0 and self.piles[1] == 0 and self.piles[2] == 0 and self.piles[3] == 0 and self.piles[
                 4] == 0 and self.piles[5] == 0) and self.player == 1:
             self.player = 2
         elif (self.piles[7] == 0 and self.piles[8] == 0 and self.piles[9] == 0 and self.piles[10] == 0 and self.piles[
                 11] == 0 and self.piles[12] == 0) and self.player == 2:
             self.player = 1
-
-
-        self.piles[self.clicked_index] += 1
-        return self.playMove(depth - 1)
 
     def printPiles(self):
         print(self.piles[13], "    ", self.piles[12], self.piles[11], self.piles[10], self.piles[9], self.piles[8],
@@ -144,6 +150,7 @@ class Board:
                 return
             else:
                 self.togglePlayer()
+                self.toggleIfDone()
                 return
 
     # check which player turn is it and make the Ai player play instead.
