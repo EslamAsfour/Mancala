@@ -50,10 +50,8 @@ def minimax(board,depth, alpha, beta, maximizingPlayer):
     if maximizingPlayer == True:
         best_index = 0
         maxEval = -1000
-        for index in range(6):
+        for index in range(7,14):
             if board[index] != 0:
-
-
                 boards[depth - 1],play_again_flag = Update_index(boards[depth], index)
                 #print(index)
                 #print((board.piles))
@@ -70,12 +68,13 @@ def minimax(board,depth, alpha, beta, maximizingPlayer):
                     #break
         if board[0]==0 and board[1]==0 and board[2]==0 and board[3]==0 and board[4]==0 and board[5]==0:
             eval, best_index = minimax(boards[depth-1],depth-1, alpha, beta, False)
+        
         return maxEval, best_index
 
     else:
         bestmin_index = 0
         minEval = +1000
-        for index in range(7, 14):
+        for index in range(6):
             if board[index] != 0:
                 boards[depth-1],play_again_flag = Update_index(boards[depth], index)
 

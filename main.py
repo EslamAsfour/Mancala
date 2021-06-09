@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtMultimedia import QSound
 from PyQt5.QtCore import * 
 import sys
-
+from MiniMax import minimax
 from Board.Board import Board
 
 
@@ -446,6 +446,7 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.page_2)
         MainWindow.setCentralWidget(self.centralwidget)
 
+        self.SinglePlayerFlag = False 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -529,7 +530,7 @@ class Ui_MainWindow(object):
         self.BT13.clicked.connect(self.Pile_Pressed)
         
         #! 
-        
+        self.SinglePlayerBtn.clicked.connect(self.SinglePlayerStart)
         self.MultiPlayerBtn.clicked.connect(self.StartGame)
         
         #! Save and Load Btns
@@ -550,6 +551,23 @@ class Ui_MainWindow(object):
         # update the timer every second
         timer.start(100)
     
+    
+    def SinglePlayerStart(self):
+        if self.RadioStealing.isChecked():
+                self.BoardObj.stealing = True
+                print("Stealing Activated")
+        else : 
+                self.BoardObj.stealing = False
+                print("No Stealing Activated")
+        self.SinglePlayerFlag = True
+        self.stackedWidget.setCurrentIndex(0) 
+        self.Toggle_Btns()   
+        self.LastPlayer = self.BoardObj.player
+        self.Update_Board()
+        QSound.play("Thba7.wav")
+        print(self.SinglePlayerFlag )
+        
+        
     def saveGame(self):  
         QSound.play("Click.wav")
         self.BoardObj.saveGame()
@@ -602,6 +620,7 @@ class Ui_MainWindow(object):
                 print("Can't Play 0")
                 return 
         
+        print("Before",self.BoardObj.player)
         self.BoardObj.clicked_index = int(sending_button.objectName()[2:])
         self.BoardObj.prepMove()
         if self.BoardObj.wrong_turn == 1 or self.BoardObj.wrong_turn == 2:
@@ -613,6 +632,7 @@ class Ui_MainWindow(object):
         
         self.Reset_Timer()
         self.Toggle_Btns()
+        print("After Toggle",self.BoardObj.player)
         self.LastPlayer = self.BoardObj.player
         if self.BoardObj.winning_player == 1:
                 print("Player 1 Win")
@@ -620,6 +640,18 @@ class Ui_MainWindow(object):
                 print("Player 2 Win")
         elif self.BoardObj.winning_player == 3:
                 print("Draw")
+        
+        
+        if self.SinglePlayerFlag == True:
+                print("Inside AI",self.BoardObj.player)
+                x,self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,True)
+                print("Choosen index",self.BoardObj.clicked_index)
+                self.BoardObj.prepMove()
+                self.Update_Board()
+                self.Reset_Timer()
+                self.Toggle_Btns()
+                
+                
                 
 #! 
     def Update_Board(self):
