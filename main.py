@@ -642,18 +642,22 @@ class Ui_MainWindow(object):
                 print("Draw")
         
         
-        if self.SinglePlayerFlag == True:
-                print("Inside AI",self.BoardObj.player)
-                x,self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,True)
-                print("Choosen index",self.BoardObj.clicked_index)
-                self.BoardObj.prepMove()
-                self.Update_Board()
-                self.Reset_Timer()
-                self.Toggle_Btns()
-                
-                
-                
-#! 
+        if self.SinglePlayerFlag == True and self.BoardObj.player == 2  :
+                self.AITurn()
+                        
+    def AITurn(self):
+        print("Inside AI",self.BoardObj.player)
+        self.LastPlayer = self.BoardObj.player
+        x,self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,True)
+        print("Choosen index",self.BoardObj.clicked_index)
+        self.BoardObj.prepMove()
+        self.Update_Board()
+        self.Reset_Timer()
+        self.Toggle_Btns()
+        if self.BoardObj.player == 2 :
+                self.AITurn()
+        
+        
     def Update_Board(self):
         count = 0
         for newValue,btn in zip(self.BoardObj.piles, self.Btn_List):
