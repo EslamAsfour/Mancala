@@ -655,7 +655,7 @@ class Ui_MainWindow(object):
         self.Reset_Timer()
         self.Toggle_Btns()
         if self.BoardObj.player == 2 :
-                self.AITurn()
+            self.AITurn()
         
         
     def Update_Board(self):
