@@ -648,7 +648,7 @@ class Ui_MainWindow(object):
     def AITurn(self):
         print("Inside AI",self.BoardObj.player)
         self.LastPlayer = self.BoardObj.player
-        x,self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,True)
+        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,False)
         print("Choosen index",self.BoardObj.clicked_index)
         self.BoardObj.prepMove()
         self.Update_Board()
