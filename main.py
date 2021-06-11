@@ -596,10 +596,10 @@ class Ui_MainWindow(object):
                 print("No Stealing Activated")
 
         if self.HardBtn.isChecked():
-                self.LevelDifficulty = 11
+                self.LevelDifficulty = 8
                 print("Hard")
         elif self.MedBtn.isChecked():
-                self.LevelDifficulty = 7
+                self.LevelDifficulty = 5
                 print("Medium")
         else:
                 self.LevelDifficulty = 3
@@ -637,10 +637,10 @@ class Ui_MainWindow(object):
                 print("No Stealing Activated")
         
         if self.HardBtn.isChecked():
-                self.LevelDifficulty = 11
+                self.LevelDifficulty = 8
                 print("Hard")
         elif self.MedBtn.isChecked():
-                self.LevelDifficulty = 7
+                self.LevelDifficulty = 5
                 print("Medium")
         else:
                 # Easy Default
@@ -713,7 +713,7 @@ class Ui_MainWindow(object):
     def AITurn(self , flag):
         print("Inside AI",self.BoardObj.player)
         self.LastPlayer = self.BoardObj.player
-        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , self.LevelDifficulty, -1000,1000,flag)
+        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , self.LevelDifficulty, -1000,1000,flag,self.BoardObj.stealing)
         print("Choosen index",self.BoardObj.clicked_index)
         self.BoardObj.prepMove()
         self.Update_Board()
