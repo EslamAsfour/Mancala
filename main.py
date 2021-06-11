@@ -14,7 +14,7 @@ from PyQt5.QtCore import *
 import sys
 from MiniMax import minimax
 from Board.Board import Board
-
+import time
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -545,7 +545,7 @@ class Ui_MainWindow(object):
         timer = QTimer(MainWindow)
         self.start = False
         #! 20 Second For time out 
-        self.count = 0
+        self.count = 100
         # adding action to timer
         timer.timeout.connect(self.showTime)
         # update the timer every second
@@ -605,7 +605,16 @@ class Ui_MainWindow(object):
                 # making flag false
                 self.start = False
                 # setting text to the label
+               
                 self.SecCounterLabel.setText("Time Outtt!!!")
+                if self.SinglePlayerFlag == True :
+                        self.AITurn(True)
+                        self.AITurn(False)
+                else :
+                        if self.BoardObj.player == 1:
+                                self.AITurn(True)
+                        else :
+                                self.AITurn(False)
 
         if self.start:
                 # getting text from count
@@ -641,22 +650,24 @@ class Ui_MainWindow(object):
         elif self.BoardObj.winning_player == 3:
                 print("Draw")
         
-        
         if self.SinglePlayerFlag == True and self.BoardObj.player == 2  :
-                self.AITurn()
+                self.AITurn(False)
                         
-    def AITurn(self):
+    def AITurn(self , flag):
         print("Inside AI",self.BoardObj.player)
         self.LastPlayer = self.BoardObj.player
-        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,False)
+        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,flag)
         print("Choosen index",self.BoardObj.clicked_index)
         self.BoardObj.prepMove()
         self.Update_Board()
         self.Reset_Timer()
         self.Toggle_Btns()
-        if self.BoardObj.player == 2 :
-            self.AITurn()
-        
+        if flag : 
+                x = 1
+        else : 
+                x= 2
+        if self.BoardObj.player == x :
+            self.AITurn(flag)
         
     def Update_Board(self):
         count = 0
