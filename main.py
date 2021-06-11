@@ -505,6 +505,10 @@ class Ui_MainWindow(object):
         
         self.LevelDifficulty = 0
         
+        self.RadioNoSteal.setChecked(True)
+        self.EasyRadio.setChecked(True)
+        
+        
         self.LastPlayer = 0
 
     def retranslateUi(self, MainWindow):
@@ -598,7 +602,6 @@ class Ui_MainWindow(object):
                 self.LevelDifficulty = 7
                 print("Medium")
         else:
-                # Easy Default
                 self.LevelDifficulty = 3
                 print("Easy")
         
