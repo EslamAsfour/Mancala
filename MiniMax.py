@@ -6,43 +6,90 @@ class player:
         self.depth=depth
         self.ispalyer1=isplayer1
 
-    def Get_children(self,board,isplayer1):
+    def Get_children(self,board,isplayer1,isStealing):
+        pilesDict = {0: 12, 1: 11, 2: 10, 3: 9, 4: 8, 5: 7, 12: 0, 11: 1, 10: 2, 9: 3, 8: 4, 7: 5}
         children=[]
         count=0
-        if isplayer1:
-            for i in range(6):
-                copy_board = board[:]
-                j = copy_board[i]
-                copy_board[i]=0
-                if j!=0:
-                    for k in range(j):
-                        index=k+i+1
-                        while index > 13:
-                            index = index - 14
-                        copy_board[index]+=1
-                        count=index
-                if count==6:
-                    children.append((copy_board, i,True))
-                else:
-                    children.append((copy_board, i,False))
+        if isStealing==False:
+            if isplayer1:
+                for i in range(6):
+                    copy_board = board[:]
+                    j = copy_board[i]
+                    copy_board[i]=0
+                    if j!=0:
+                        for k in range(j):
+                            index=k+i+1
+                            while index > 13:
+                                index = index - 14
+                            copy_board[index]+=1
+                            count=index
+                    if count==6:
+                        children.append((copy_board, i,True))
+                    else:
+                        children.append((copy_board, i,False))
 
+            else:
+                for i in range(7,13):
+                    copy_board = board[:]
+                    j = copy_board[i]
+                    copy_board[i]=0
+                    if j!=0:
+                        for k in range(j):
+                            index = k + i + 1
+                            while index > 13:
+                                index = index - 14
+                            copy_board[index] += 1
+                            count = index
+
+                    if count==13:
+                        children.append((copy_board, i,True))
+                    else:
+                        children.append((copy_board, i,False))
         else:
-            for i in range(7,13):
-                copy_board = board[:]
-                j = copy_board[i]
-                copy_board[i]=0
-                if j!=0:
-                    for k in range(j):
-                        index = k + i + 1
-                        while index > 13:
-                            index = index - 14
-                        copy_board[index] += 1
-                        count = index
+            if isplayer1:
+                for i in range(6):
+                    copy_board = board[:]
+                    j = copy_board[i]
+                    copy_board[i] = 0
+                    if j != 0:
+                        for k in range(j):
+                            index = k + i + 1
+                            while index > 13:
+                                index = index - 14
+                            copy_board[index] += 1
+                            count = index
+                    if count == 6:
+                        children.append((copy_board, i, True))
+                    elif count<6 and copy_board[count]==1 and copy_board[pilesDict.get(count)]!=0:
+                        copy_board[count]=0
+                        copy_board[6]+=copy_board[pilesDict.get(count)]+1
+                        copy_board[pilesDict.get(count)]=0
+                        children.append((copy_board, i, False))
+                    else:
+                        children.append((copy_board, i, False))
 
-                if count==13:
-                    children.append((copy_board, i,True))
-                else:
-                    children.append((copy_board, i,False))
+            else:
+                for i in range(7, 13):
+                    copy_board = board[:]
+                    j = copy_board[i]
+                    copy_board[i] = 0
+                    if j != 0:
+                        for k in range(j):
+                            index = k + i + 1
+                            while index > 13:
+                                index = index - 14
+                            copy_board[index] += 1
+                            count = index
+
+                    if count == 13:
+                        children.append((copy_board, i, True))
+                    elif count > 6 and count < 13 and copy_board[count] == 1 and copy_board[pilesDict.get(count)] != 0:
+                        copy_board[count] = 0
+                        copy_board[13] += copy_board[pilesDict.get(count)] + 1
+                        copy_board[pilesDict.get(count)] = 0
+                        children.append((copy_board, i, False))
+                    else:
+                        children.append((copy_board, i, False))
 
 
         return children
@@ -64,7 +111,7 @@ class player:
 
 
 
-    def minimax(self,board):
+    def minimax(self,board,alpha,beta,isStealing):
 
         def game_is_over(board):
             if (board[6]+board[13])==48:
@@ -100,15 +147,15 @@ class player:
                 return index
 
 
-        def MinimaxHelper(current_board,depth,isplayer1,isMax):
+        def MinimaxHelper(current_board,depth,alpha,beta,isplayer1,isMax,isStealing):
             if game_is_over(current_board):
                 if self.ispalyer1:
-                    return current_board[6]-current_board[13]
+                    return current_board[6]-current_board[13],-1
                 else:
-                    return current_board[13]-current_board[6]
+                    return current_board[13]-current_board[6],-1
             elif depth==0:
                 return self.Heuristic(current_board,self.ispalyer1),-1
-            children=self.Get_children(current_board,isplayer1)
+            children=self.Get_children(current_board,isplayer1,isStealing)
             if isMax:
                 best_score=-1000
                 should_replace=lambda x: x>best_score
@@ -127,15 +174,24 @@ class player:
 
                 if current_board[child_move]!=0:
                     if Play_again==True:
-                        temp_val= MinimaxHelper(child_board, depth-1 , isplayer1,isMax)[0]
+
+                        temp_val = MinimaxHelper(child_board, depth-1 ,alpha,beta, isplayer1,isMax,isStealing)[0]
                     else:
-                        temp_val = MinimaxHelper(child_board, depth - 1, not isplayer1, not isMax)[0]
+                        temp_val = MinimaxHelper(child_board, depth - 1,alpha,beta, not isplayer1, not isMax,isStealing)[0]
+                else:
+                    pass
 
                 if should_replace(temp_val):
                     best_score = temp_val
                     best_move = child_move
+                if isMax:
+                    alpha=max(alpha,temp_val)
+                else:
+                    beta=min(beta,temp_val)
+                if alpha>beta:
+                    break
             return (best_score,best_move)
-        score,move= MinimaxHelper(board,self.depth,self.ispalyer1,True)
+        score,move= MinimaxHelper(board,self.depth,alpha,beta,self.ispalyer1,True,isStealing)
 
         move=adjust(board,move,self.ispalyer1)
 
@@ -144,13 +200,13 @@ class player:
 
 
 
-def minimax(board,depth,alpha,beta,isplayer1):
+def minimax(board,depth,alpha,beta,isplayer1,isStealing):
     p2 = player(depth, isplayer1)
-    return p2.minimax(board)
+    return p2.minimax(board,alpha,beta,isStealing)
 
 sys.setrecursionlimit(30000)
 p3=player(5,False)
 board= Board
-board.piles=[0,0,3,4,2,3,14,0,0,0,0,4,0,18]
-index= p3.minimax(board.piles)
+board.piles=[0,0,0,0,0,0,12,0,0,0,0,0,1,35]
+index= p3.minimax(board.piles,-1000,1000,True)
 print(index)
