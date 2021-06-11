@@ -14,7 +14,7 @@ from PyQt5.QtCore import *
 import sys
 from MiniMax import minimax
 from Board.Board import Board
-import time
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -294,6 +294,9 @@ class Ui_MainWindow(object):
         self.SaveBtn.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.SaveBtn.setStyleSheet("border-radius: 25px;background-color: rgb(255, 252, 168);")
         self.SaveBtn.setObjectName("SaveBtn")
+        
+        
+        
         self.BackgroundImg.raise_()
         self.BoardImgLabel.raise_()
         self.BT0.raise_()
@@ -395,6 +398,33 @@ class Ui_MainWindow(object):
         self.MultiPlayerBtn.setStyleSheet("border-radius: 25px;background-color: rgb(255, 252, 168);margin-left : 50px;")
         self.MultiPlayerBtn.setObjectName("MultiPlayerBtn")
         self.verticalLayout.addWidget(self.MultiPlayerBtn)
+        
+        #!! 
+        self.layoutWidget = QtWidgets.QWidget(self.splitter)
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.Difficulty = QtWidgets.QWidget(self.layoutWidget)
+        self.Difficulty.setMaximumSize(QtCore.QSize(16777215, 39))
+        self.Difficulty.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.Difficulty.setStyleSheet("")
+        self.Difficulty.setObjectName("Difficulty")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.Difficulty)
+        self.horizontalLayout_2.setContentsMargins(79, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.EasyRadio = QtWidgets.QRadioButton(self.Difficulty)
+        self.EasyRadio.setStyleSheet("color: rgb(255, 252, 168);")
+        self.EasyRadio.setObjectName("EasyRadio")
+        self.horizontalLayout_2.addWidget(self.EasyRadio)
+        self.MedBtn = QtWidgets.QRadioButton(self.Difficulty)
+        self.MedBtn.setStyleSheet("color: rgb(255, 252, 168);")
+        self.MedBtn.setObjectName("MedBtn")
+        self.horizontalLayout_2.addWidget(self.MedBtn)
+        self.HardBtn = QtWidgets.QRadioButton(self.Difficulty)
+        self.HardBtn.setStyleSheet("color: rgb(255, 252, 168);")
+        self.HardBtn.setObjectName("HardBtn")
+        self.horizontalLayout_2.addWidget(self.HardBtn)
+        self.verticalLayout.addWidget(self.Difficulty)
+        
         self.widget = QtWidgets.QWidget(self.layoutWidget)
         self.widget.setMaximumSize(QtCore.QSize(16777215, 39))
         self.widget.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -445,7 +475,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.ExitGameBtn)
         self.stackedWidget.addWidget(self.page_2)
         MainWindow.setCentralWidget(self.centralwidget)
-
+        
         self.SinglePlayerFlag = False 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
@@ -454,8 +484,6 @@ class Ui_MainWindow(object):
         #! ------------- Add Here -------------
         self.stackedWidget.setCurrentIndex(1)
         self.MainWindow = MainWindow
-        
-        
         
         #! Make list of Buttons
         self.Btn_List = []
@@ -473,8 +501,9 @@ class Ui_MainWindow(object):
         self.Btn_List.append(self.BT11)
         self.Btn_List.append(self.BT12)
         self.Btn_List.append(self.BT13)
-
         #! Player 1 Starts
+        
+        self.LevelDifficulty = 0
         
         self.LastPlayer = 0
 
@@ -509,7 +538,9 @@ class Ui_MainWindow(object):
         self.RadioNoSteal.setText(_translate("MainWindow", "No Stealing"))
         self.LoadBtn.setText(_translate("MainWindow", "Load Game"))
         self.ExitGameBtn.setText(_translate("MainWindow", "Exit"))
-        
+        self.EasyRadio.setText(_translate("MainWindow", "Easy"))
+        self.MedBtn.setText(_translate("MainWindow", "Medium"))
+        self.HardBtn.setText(_translate("MainWindow", "Hard"))
         #! 
         self.Plus1_P2Label.setVisible(False)
         self.Plus1_P1Label.setVisible(False)
@@ -559,15 +590,27 @@ class Ui_MainWindow(object):
         else : 
                 self.BoardObj.stealing = False
                 print("No Stealing Activated")
+
+        if self.HardBtn.isChecked():
+                self.LevelDifficulty = 11
+                print("Hard")
+        elif self.MedBtn.isChecked():
+                self.LevelDifficulty = 7
+                print("Medium")
+        else:
+                # Easy Default
+                self.LevelDifficulty = 3
+                print("Easy")
+        
         self.SinglePlayerFlag = True
         self.stackedWidget.setCurrentIndex(0) 
         self.Toggle_Btns()   
         self.LastPlayer = self.BoardObj.player
         self.Update_Board()
         QSound.play("Thba7.wav")
-        print(self.SinglePlayerFlag )
-        
-        
+ 
+  
+               
     def saveGame(self):  
         QSound.play("Click.wav")
         self.BoardObj.saveGame()
@@ -589,6 +632,17 @@ class Ui_MainWindow(object):
         else : 
                 self.BoardObj.stealing = False
                 print("No Stealing Activated")
+        
+        if self.HardBtn.isChecked():
+                self.LevelDifficulty = 11
+                print("Hard")
+        elif self.MedBtn.isChecked():
+                self.LevelDifficulty = 7
+                print("Medium")
+        else:
+                # Easy Default
+                self.LevelDifficulty = 3
+                print("Easy")
         
         self.stackedWidget.setCurrentIndex(0) 
         self.Toggle_Btns()   
@@ -656,7 +710,7 @@ class Ui_MainWindow(object):
     def AITurn(self , flag):
         print("Inside AI",self.BoardObj.player)
         self.LastPlayer = self.BoardObj.player
-        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , 5 , -1000,1000,flag)
+        self.BoardObj.clicked_index=  minimax(self.BoardObj.piles , self.LevelDifficulty, -1000,1000,flag)
         print("Choosen index",self.BoardObj.clicked_index)
         self.BoardObj.prepMove()
         self.Update_Board()

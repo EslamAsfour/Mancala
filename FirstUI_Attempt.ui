@@ -755,7 +755,7 @@ background-color: rgb(255, 252, 168);
         <x>390</x>
         <y>60</y>
         <width>541</width>
-        <height>591</height>
+        <height>671</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -887,6 +887,69 @@ margin-left : 50px;</string>
           <property name="text">
            <string>Multi-Player</string>
           </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="Difficulty" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>39</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>79</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QRadioButton" name="EasyRadio">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 252, 168);</string>
+             </property>
+             <property name="text">
+              <string>Easy</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="MedBtn">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 252, 168);</string>
+             </property>
+             <property name="text">
+              <string>Medium</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="HardBtn">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 252, 168);</string>
+             </property>
+             <property name="text">
+              <string>Hard</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
