@@ -15,7 +15,7 @@ class Board:
         # zero-stone piles are the store of each player.
         self.piles = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
         self.pilesDict = {0: 12, 1: 11, 2: 10, 3: 9, 4: 8, 5: 7, 12: 0, 11: 1, 10: 2, 9: 3, 8: 4, 7: 5}
-
+        self.Mode = False
         # test cases
         # self.piles = [0, 5, 0, 5, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0]
         # self.piles = [4, 4, 4, 4, 4, 29, 0, 4, 32, 4, 4, 4, 4, 0]
@@ -165,7 +165,8 @@ class Board:
             filehandle.writelines("%s\n" % pile for pile in self.piles)
             filehandle.write(str(self.player)+"\n")
             filehandle.write(str(self.stealing)+"\n")
-            filehandle.write(str(self.difficulty))
+            filehandle.write(str(self.difficulty)+"\n" )
+            filehandle.write(str(self.Mode))
             filehandle.close()
         self.saveLoad = ""
 
@@ -178,15 +179,20 @@ class Board:
             filecontents = filehandle.readlines()
             for line in range(len(filecontents)):
                 # remove linebreak which is the last character of the string
-                if line == len(filecontents) - 3:
+                if line == len(filecontents) - 4:
                     self.player = int(filecontents[line])
-                elif line == len(filecontents) - 2:
+                elif line == len(filecontents) - 3:
                     if filecontents[line] == "True":
                         self.stealing = True
                     else:
                         self.stealing = False
-                elif line == len(filecontents) - 1:
+                elif line == len(filecontents) - 2:
                     self.difficulty = int(filecontents[line])
+                elif line == len(filecontents) - 1:
+                    if filecontents[line] == "True":
+                        self.Mode = True
+                    else:
+                        self.Mode = False
                 else:
                     pile = int(filecontents[line])
                     tempPilesList.append(pile)

@@ -604,6 +604,7 @@ class Ui_MainWindow(object):
         else:
                 self.LevelDifficulty = 3
                 print("Easy")
+        
         QSound.play("Click.wav")
         self.SinglePlayerFlag = True
         self.stackedWidget.setCurrentIndex(0) 
@@ -617,6 +618,7 @@ class Ui_MainWindow(object):
     def saveGame(self):  
         QSound.play("Click.wav")
         self.BoardObj.difficulty = self.LevelDifficulty
+        self.BoardObj.Mode = self.SinglePlayerFlag
         self.BoardObj.saveGame()
         self.exitGame()
     def exitGame(self):  
@@ -628,6 +630,7 @@ class Ui_MainWindow(object):
         self.LastPlayer = self.BoardObj.player
         self.LevelDifficulty = self.BoardObj.difficulty
         self.Update_Board()
+        self.SinglePlayerFlag = self.BoardObj.Mode
         print(self.LevelDifficulty)
       
         
