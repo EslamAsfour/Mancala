@@ -8,6 +8,7 @@ class Board:
         self.clicked_index = 0
         self.saveLoad = ''
         self.winning_player = 0
+        self.difficulty = 0
         # Player1 & 2 stores
         self.player1_store = 6
         self.player2_store = 13
@@ -163,7 +164,8 @@ class Board:
         with open('gamefile.txt', 'w') as filehandle:
             filehandle.writelines("%s\n" % pile for pile in self.piles)
             filehandle.write(str(self.player)+"\n")
-            filehandle.write(str(self.stealing))
+            filehandle.write(str(self.stealing)+"\n")
+            filehandle.write(str(self.difficulty))
             filehandle.close()
         self.saveLoad = ""
 
@@ -176,13 +178,15 @@ class Board:
             filecontents = filehandle.readlines()
             for line in range(len(filecontents)):
                 # remove linebreak which is the last character of the string
-                if line == len(filecontents) - 2:
+                if line == len(filecontents) - 3:
                     self.player = int(filecontents[line])
-                elif line == len(filecontents) - 1:
+                elif line == len(filecontents) - 2:
                     if filecontents[line] == "True":
                         self.stealing = True
                     else:
                         self.stealing = False
+                elif line == len(filecontents) - 1:
+                    self.difficulty = int(filecontents[line])
                 else:
                     pile = int(filecontents[line])
                     tempPilesList.append(pile)

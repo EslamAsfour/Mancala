@@ -6,7 +6,7 @@ board = Board()
 
 board.toggleGameStatus(1)
 
-board.printPiles()
+# board.printPiles()
 # board.saveLoad = 'l'
 
 while board.playing:
