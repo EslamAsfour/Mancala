@@ -508,12 +508,12 @@ class Ui_MainWindow(object):
         self.RadioNoSteal.setChecked(True)
         self.EasyRadio.setChecked(True)
         
-        
+        QSound.play("StartMenuMusic.wav")
         self.LastPlayer = 0
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Mancala"))
         self.BT4.setText(_translate("MainWindow", "4"))
         self.BT6.setText(_translate("MainWindow", "6"))
         self.Player2Turn_2.setText(_translate("MainWindow", "Player 2 Turn"))
@@ -596,21 +596,21 @@ class Ui_MainWindow(object):
                 print("No Stealing Activated")
 
         if self.HardBtn.isChecked():
-                self.LevelDifficulty = 11
+                self.LevelDifficulty = 7
                 print("Hard")
         elif self.MedBtn.isChecked():
-                self.LevelDifficulty = 7
+                self.LevelDifficulty = 5
                 print("Medium")
         else:
                 self.LevelDifficulty = 3
                 print("Easy")
-        
+        QSound.play("Click.wav")
         self.SinglePlayerFlag = True
         self.stackedWidget.setCurrentIndex(0) 
         self.Toggle_Btns()   
         self.LastPlayer = self.BoardObj.player
         self.Update_Board()
-        QSound.play("Thba7.wav")
+        
  
   
                
@@ -626,7 +626,7 @@ class Ui_MainWindow(object):
         self.Toggle_Btns()   
         self.LastPlayer = self.BoardObj.player
         self.Update_Board()
-        QSound.play("Thba7.wav")
+      
         
     def StartGame(self):
         if self.RadioStealing.isChecked():
@@ -637,21 +637,21 @@ class Ui_MainWindow(object):
                 print("No Stealing Activated")
         
         if self.HardBtn.isChecked():
-                self.LevelDifficulty = 11
+                self.LevelDifficulty = 7
                 print("Hard")
         elif self.MedBtn.isChecked():
-                self.LevelDifficulty = 7
+                self.LevelDifficulty = 5
                 print("Medium")
         else:
                 # Easy Default
                 self.LevelDifficulty = 3
                 print("Easy")
-        
+        QSound.play("Click.wav")
         self.stackedWidget.setCurrentIndex(0) 
         self.Toggle_Btns()   
         self.LastPlayer = self.BoardObj.player
         self.Update_Board()
-        QSound.play("Thba7.wav")
+        
     def showTime(self):
         # checking if flag is true
         if self.start:
@@ -757,6 +757,7 @@ class Ui_MainWindow(object):
                         x = msg.exec_()  
     #! Function Called when the winner choose retry or cancle            
     def MsgButton(self,i):
+            QSound.play("Click.wav")
             if i.text() == "Retry":
                 print("Retry")
                 self.BoardObj = Board()
@@ -776,7 +777,7 @@ class Ui_MainWindow(object):
                 self.Plus1_P2Label.setVisible(False)
                 if self.LastPlayer == 1:
                         self.Plus1_P1Label.setVisible(True)
-                        QSound.play("3ed.wav")
+                        
                 else: 
                         self.Plus1_P1Label.setVisible(False)
                                 
@@ -794,7 +795,7 @@ class Ui_MainWindow(object):
                 self.Plus1_P1Label.setVisible(False)
                 if self.LastPlayer == 2:
                         self.Plus1_P2Label.setVisible(True)
-                        QSound.play("3ed.wav")
+                        
                 else :
                         self.Plus1_P2Label.setVisible(False)
                 self.Player2Turn_2.setStyleSheet(" color :  rgb(255, 252, 168)")
